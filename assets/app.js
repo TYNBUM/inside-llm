@@ -1,6 +1,7 @@
 /* Inside LLM reading shell. All experiments remain in course.js. */
 (() => {
   const esc = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  history.scrollRestoration = 'manual';
   const sourceSetView = setView;
   const sourceSetMode = setMode;
   const sourceProgress = renderProgress;
@@ -117,4 +118,5 @@
   // Persist immediately when leaving; debounced saves alone can lose the latest action.
   addEventListener('pagehide',()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}});
   route(location.hash.slice(1)||'home',false);
+  requestAnimationFrame(()=>{const target=document.getElementById(activeTarget);if(target)target.scrollIntoView({block:'start'});});
 })();
